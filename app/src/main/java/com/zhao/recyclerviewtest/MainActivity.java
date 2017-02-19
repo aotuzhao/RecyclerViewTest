@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layout);
         recyAdapter = new RecyAdapter();
         recyclerView.setAdapter(recyAdapter);
+        recyclerView.addItemDecoration(new DividerItemDectation(this, DividerItemDectation.VERTICAL_LIST));
     }
 
     private void initData() {
