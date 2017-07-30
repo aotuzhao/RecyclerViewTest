@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,30 @@ public class MainActivity extends AppCompatActivity {
         recyAdapter = new RecyAdapter();
         recyclerView.setAdapter(recyAdapter);
         recyclerView.addItemDecoration(new DividerItemDectation(this, DividerItemDectation.VERTICAL_LIST));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.e("Recy状态变化newsState----",newState+"");
+                if (recyclerView.canScrollVertically(1)==false&&recyclerView.canScrollVertically(-1)==true){
+                    Log.e("Recy到达底部newsState----","进行加载更多操作");
+                }
+                if (recyclerView.canScrollVertically(1)==true&&recyclerView.canScrollVertically(-1)==false){
+                    Log.e("Recy到达顶部newsState----","进行刷新操作----刷新建议使用SwipeRefresh");
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.e("Recy滑动变化----","dx:"+dx+" dy:"+dy);
+                Log.e("Recy滑动变化----","向上:"+recyclerView.canScrollVertically(1));
+                Log.e("Recy滑动变化----","向下:"+recyclerView.canScrollVertically(-1));
+            }
+        });
+
     }
 
     private void initData() {
